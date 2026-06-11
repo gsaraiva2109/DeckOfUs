@@ -32,7 +32,7 @@ export default function CardStack({ card, pal, levelName, flipped, P, V, onFlip,
   if (tipo === 'trocada') {
     const asker = card.de === 'voce' ? V : P
     const askee = card.para === 'voce' ? V : P
-    trocadaLabel = `${asker}, pergunta pro ${askee}:`
+    trocadaLabel = `${asker}, pergunta para ${askee}:`
   }
 
   function onDown(e: React.PointerEvent) {
