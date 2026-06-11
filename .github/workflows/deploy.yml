@@ -89,9 +89,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Dokploy redeploy
-        uses: benbristow/dokploy-deploy-action@3a2a16f0158b41377adf300c9dd6d3d396aa7586 # 0.2.2
-        with:
-          api_token: ${{ secrets.DOKPLOY_AUTH_TOKEN }}
-          application_id: ${{ secrets.DOKPLOY_APPLICATION_ID }}
-          dokploy_url: ${{ secrets.DOKPLOY_URL }}
-          service_type: compose
+        run: |
+          BASE_URL="${{ secrets.DOKPLOY_URL }}"
+          BASE_URL="${BASE_URL%/}"
+
+          STATUS=$(curl -X POST \
+            "${BASE_URL}/api/compose.deploy" \
+            -H "x-api-key: ${{ secrets.DOKPLOY_AUTH_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"composeId\": \"${{ secrets.DOKPLOY_APPLICATION_ID }}\"}" \
+            -w "%{http_code}" \
+            -o /tmp/dokploy-response.json \
+            -sS)
+
+          echo "HTTP status: $STATUS"
+
+          if [ "$STATUS" -lt 200 ] || [ "$STATUS" -ge 300 ]; then
+            echo "Deploy trigger failed."
+            cat /tmp/dokploy-response.json 2>/dev/null || true
+            exit 1
+          fi
+
+          echo "Deploy triggered successfully."
+          cat /tmp/dokploy-response.json 2>/dev/null || true

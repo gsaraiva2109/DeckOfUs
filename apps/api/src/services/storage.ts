@@ -17,6 +17,9 @@ export class LocalStorage implements StorageAdapter {
     meta: { mime: string; ext: string },
   ): Promise<{ url: string; id?: string }> {
     const dir = env.LOCAL_STORAGE_DIR;
+    if (!dir) {
+      throw new Error('LOCAL_STORAGE_DIR is empty or not configured');
+    }
     await fs.mkdir(dir, { recursive: true });
     const name = `${crypto.randomUUID()}.${meta.ext}`;
     await fs.writeFile(path.join(dir, name), buf);

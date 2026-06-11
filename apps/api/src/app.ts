@@ -19,6 +19,9 @@ export async function buildApp(): Promise<FastifyInstance> {
   });
 
   // Ensure storage/data directories exist.
+  if (!env.LOCAL_STORAGE_DIR) {
+    throw new Error('LOCAL_STORAGE_DIR is empty or not configured');
+  }
   await fs.mkdir(env.LOCAL_STORAGE_DIR, { recursive: true });
 
   await fastify.register(securityPlugin);

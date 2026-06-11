@@ -18,26 +18,26 @@ services:
     image: ghcr.io/gsaraiva2109/deckofus-backend:latest
     restart: unless-stopped
     environment:
-      NODE_ENV: ${NODE_ENV}
-      PORT: ${PORT}
-      HOST: ${HOST}
-      CORS_ORIGINS: ${CORS_ORIGINS}
+      NODE_ENV: ${NODE_ENV:-production}
+      PORT: ${PORT:-8080}
+      HOST: ${HOST:-0.0.0.0}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173}
       JWT_SECRET: ${JWT_SECRET}
-      TOKEN_TTL: ${TOKEN_TTL}
-      SESSION_TTL_HOURS: ${SESSION_TTL_HOURS}
-      OUSADO_MAX_TRIES: ${OUSADO_MAX_TRIES}
-      OUSADO_LOCK_MINUTES: ${OUSADO_LOCK_MINUTES}
-      PUBLIC_APP_URL: ${PUBLIC_APP_URL}
-      DATABASE_URL: ${DATABASE_URL}
-      STORAGE_DRIVER: ${STORAGE_DRIVER}
-      LOCAL_STORAGE_DIR: ${LOCAL_STORAGE_DIR}
-      LOCAL_PUBLIC_BASE: ${LOCAL_PUBLIC_BASE}
+      TOKEN_TTL: ${TOKEN_TTL:-12h}
+      SESSION_TTL_HOURS: ${SESSION_TTL_HOURS:-12}
+      OUSADO_MAX_TRIES: ${OUSADO_MAX_TRIES:-5}
+      OUSADO_LOCK_MINUTES: ${OUSADO_LOCK_MINUTES:-15}
+      PUBLIC_APP_URL: ${PUBLIC_APP_URL:-http://localhost:5173}
+      DATABASE_URL: ${DATABASE_URL:-file:./data/deckofus.db}
+      STORAGE_DRIVER: ${STORAGE_DRIVER:-local}
+      LOCAL_STORAGE_DIR: ${LOCAL_STORAGE_DIR:-./data/uploads}
+      LOCAL_PUBLIC_BASE: ${LOCAL_PUBLIC_BASE:-http://localhost:8080/uploads}
       CLOUDREVE_BASE_URL: ${CLOUDREVE_BASE_URL}
       CLOUDREVE_CLIENT_ID: ${CLOUDREVE_CLIENT_ID}
       CLOUDREVE_CLIENT_SECRET: ${CLOUDREVE_CLIENT_SECRET}
       CLOUDREVE_REFRESH_TOKEN: ${CLOUDREVE_REFRESH_TOKEN}
-      CLOUDREVE_FOLDER: ${CLOUDREVE_FOLDER}
-      TRUST_PROXY: ${TRUST_PROXY}
+      CLOUDREVE_FOLDER: ${CLOUDREVE_FOLDER:-cloudreve://my/deckofus}
+      TRUST_PROXY: ${TRUST_PROXY:-false}
     volumes:
       # Named volume so the SQLite DB + uploaded photos survive redeploys.
       - deckofus_data:/app/data

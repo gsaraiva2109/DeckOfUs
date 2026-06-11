@@ -17,11 +17,11 @@ const schema = z.object({
   OUSADO_LOCK_MINUTES: z.coerce.number().int().positive().default(15),
   PUBLIC_APP_URL: z.string().url().default('http://localhost:5173'),
 
-  DATABASE_URL: z.string().default('file:./data/deckofus.db'),
+  DATABASE_URL: z.string().min(1, 'DATABASE_URL must not be empty').default('file:./data/deckofus.db'),
 
   STORAGE_DRIVER: z.enum(['local', 'cloudreve']).default('local'),
-  LOCAL_STORAGE_DIR: z.string().default('./data/uploads'),
-  LOCAL_PUBLIC_BASE: z.string().default('http://localhost:8080/uploads'),
+  LOCAL_STORAGE_DIR: z.string().min(1, 'LOCAL_STORAGE_DIR must not be empty').default('./data/uploads'),
+  LOCAL_PUBLIC_BASE: z.string().min(1, 'LOCAL_PUBLIC_BASE must not be empty').default('http://localhost:8080/uploads'),
 
   // Cloudreve v4 uses OAuth2: a long-lived refresh_token is exchanged for
   // short-lived (1h) access tokens at runtime (see services/cloudreveAuth.ts).
