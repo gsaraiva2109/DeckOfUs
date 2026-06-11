@@ -1,0 +1,15 @@
+{
+  "name": "deckofus",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Real-time two-device couples card game — root dev orchestrator.",
+  "scripts": {
+    "dev": "concurrently -n api,web -c magenta,cyan -k \"npm --prefix apps/api run dev\" \"npm --prefix apps/web run dev\"",
+    "build": "npm --prefix apps/api run build && npm --prefix apps/web run build",
+    "start": "npm --prefix apps/api run start",
+    "install:all": "npm --prefix apps/api install && npm --prefix apps/web install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

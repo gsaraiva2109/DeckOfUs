@@ -146,6 +146,12 @@ export async function sessionRoutes(
         return reply.code(404).send({ error: 'not_found' });
       }
 
+      const startedAt = Date.now();
+      req.log.info(
+        { sessionId: session.id, role: req.user.role },
+        'photo upload received',
+      );
+
       let raw: Buffer;
       try {
         const file = await req.file({ limits: { fileSize: MAX_PHOTO_BYTES } });
@@ -170,6 +176,10 @@ export async function sessionRoutes(
           .code(415)
           .send({ error: 'unsupported_media', message: 'Only jpeg/png/webp' });
       }
+      req.log.info(
+        { sessionId: session.id, mime: sniffed.mime, bytes: raw.length },
+        'photo validated',
+      );
 
       try {
         // Re-encode + strip metadata, honoring EXIF orientation.
@@ -194,10 +204,22 @@ export async function sessionRoutes(
         });
 
         broadcastPhoto(fastify.io, session.id, stored.url);
+        req.log.info(
+          {
+            sessionId: session.id,
+            url: stored.url,
+            driver: env.STORAGE_DRIVER,
+            ms: Date.now() - startedAt,
+          },
+          'photo stored',
+        );
         return reply.send({ url: stored.url });
       } catch (err) {
         if (err instanceof AppError) return handleError(reply, err);
-        req.log.error({ err }, 'photo upload failed');
+        req.log.error(
+          { err, sessionId: session.id, driver: env.STORAGE_DRIVER },
+          'photo upload failed',
+        );
         return reply.code(400).send({ error: 'upload_failed' });
       }
     },

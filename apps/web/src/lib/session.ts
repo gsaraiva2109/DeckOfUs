@@ -16,10 +16,13 @@ import type { Socket } from 'socket.io-client'
 import {
   connect as connectSocket,
   disconnect as disconnectSocket,
+  emitNav,
+  onNav,
   onPhoto,
   onPresence,
   onOusado,
   onSessionEnded,
+  type NavPayload,
   type PresencePayload,
 } from './socket'
 
@@ -44,6 +47,10 @@ export interface SessionContextValue extends SessionState {
   addPhoto: (url: string) => void
   // Fired (locally) when the server pushes ousado_activated; App subscribes.
   onOusadoEvent: (cb: () => void) => () => void
+  // Broadcast a navigation snapshot to the other device (no-op in solo play).
+  syncNav: (payload: NavPayload) => void
+  // Fired when the other device relays a nav snapshot; App applies it.
+  onNavEvent: (cb: (p: NavPayload) => void) => () => void
   reset: () => void
 }
 
@@ -64,6 +71,8 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const socketRef = useRef<Socket | null>(null)
   // Local listeners for the ousado event, so App can drive its choreography.
   const ousadoListeners = useRef<Set<() => void>>(new Set())
+  // Local listeners for relayed nav snapshots, so App can mirror navigation.
+  const navListeners = useRef<Set<(p: NavPayload) => void>>(new Set())
 
   const setSession: SessionContextValue['setSession'] = useCallback((s) => {
     setState((prev) => ({
@@ -91,6 +100,18 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
+  const syncNav = useCallback((payload: NavPayload) => {
+    const socket = socketRef.current
+    if (socket) emitNav(socket, payload)
+  }, [])
+
+  const onNavEvent = useCallback((cb: (p: NavPayload) => void) => {
+    navListeners.current.add(cb)
+    return () => {
+      navListeners.current.delete(cb)
+    }
+  }, [])
+
   const reset = useCallback(() => {
     disconnectSocket(socketRef.current)
     socketRef.current = null
@@ -112,6 +133,9 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       onPhoto(socket, (p) =>
         setState((prev) => (prev.photos.includes(p.url) ? prev : { ...prev, photos: [...prev.photos, p.url] })),
       ),
+      onNav(socket, (p) => {
+        navListeners.current.forEach((cb) => cb(p))
+      }),
       onSessionEnded(socket, () => {
         /* keep state; the game can still finish locally */
       }),
@@ -131,6 +155,8 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     setOusadoActive,
     addPhoto,
     onOusadoEvent,
+    syncNav,
+    onNavEvent,
     reset,
   }
 

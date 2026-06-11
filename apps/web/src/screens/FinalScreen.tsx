@@ -113,7 +113,7 @@ export default function FinalScreen({ cfg, finalPhase, levelsPlayed, totalCards,
             <Heart size={32} fill="#FFB23E" color="#FFB23E" style={{ marginBottom:8 }} />
             <div style={{ width:58, height:58, borderRadius:'50%', background:'#7A1535', boxShadow:'0 8px 18px -6px rgba(80,10,40,.5)' }}></div>
           </div>
-          <h3 style={{ fontFamily:"'Instrument Serif',serif", fontStyle:'italic', fontWeight:400, fontSize:48, lineHeight:1.0, color:'#3B1020', margin:'28px 0 0' }}>{titulo}</h3>
+          <h3 style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontWeight:400, fontSize:48, lineHeight:1.0, color:'#3B1020', margin:'28px 0 0' }}>{titulo}</h3>
           <p style={{ fontSize:15, lineHeight:1.55, color:'#5A1A30', margin:'14px 0 28px', maxWidth:310 }}>{frase}</p>
           <div
             onClick={onReplay}
@@ -153,11 +153,11 @@ export default function FinalScreen({ cfg, finalPhase, levelsPlayed, totalCards,
                 </div>
               )}
             </div>
-            <div style={{ fontFamily:"'Instrument Serif',serif", fontStyle:'italic', fontSize:20, color:'#3B1020', marginTop:11 }}>
+            <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:20, color:'#3B1020', marginTop:11 }}>
               {photoSrc ? 'nós, hoje' : 'toque pra tirar'}
             </div>
           </div>
-          <h3 style={{ fontFamily:"'Plus Jakarta Sans',sans-serif", fontWeight:800, fontSize:30, lineHeight:1.05, color:'#FFF1E6', margin:'30px 0 0', letterSpacing:'-.01em' }}>{titulo}</h3>
+          <h3 style={{ fontFamily:'var(--font-body)', fontWeight:800, fontSize:30, lineHeight:1.05, color:'#FFF1E6', margin:'30px 0 0', letterSpacing:'-.01em' }}>{titulo}</h3>
           <p style={{ fontSize:14, lineHeight:1.55, color:'#FFC9D6', margin:'12px 0 24px', maxWidth:310 }}>{frase}</p>
           <div style={{ display:'flex', gap:12, width:'100%', maxWidth:330 }}>
             <div

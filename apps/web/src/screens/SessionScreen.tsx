@@ -26,7 +26,7 @@ const inputStyle: React.CSSProperties = {
   fontSize: 16,
   padding: '13px 15px',
   outline: 'none',
-  fontFamily: "'Plus Jakarta Sans',sans-serif",
+  fontFamily: 'var(--font-body)',
 }
 
 const primaryBtn: React.CSSProperties = {
@@ -151,7 +151,7 @@ export default function SessionScreen({ onReady }: Props) {
         <div style={{ color: '#FF8FB0', filter: 'drop-shadow(0 0 16px rgba(255,51,95,.5))', display: 'inline-flex' }}>
           <Heart size={34} fill="#FF335F" color="#FF335F" />
         </div>
-        <h1 style={{ fontFamily:"'Plus Jakarta Sans',sans-serif", fontWeight:800, fontSize:34, lineHeight:1, margin:'12px 0 6px', color:'#FFF1E6', letterSpacing:'-.02em' }}>
+        <h1 style={{ fontFamily:'var(--font-body)', fontWeight:800, fontSize:34, lineHeight:1, margin:'12px 0 6px', color:'#FFF1E6', letterSpacing:'-.02em' }}>
           DeckOfUs
         </h1>
         <p style={{ fontSize:14, lineHeight:1.5, color:'#FFC9D6', margin:0 }}>
@@ -210,7 +210,7 @@ export default function SessionScreen({ onReady }: Props) {
           </div>
           <div style={{ textAlign: 'center' }}>
             <div style={{ fontSize: 12, color: '#C98699', letterSpacing: '.2em', textTransform: 'uppercase' }}>código</div>
-            <div style={{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontSize: 40, letterSpacing: '.12em', color: '#FFF1E6', lineHeight: 1.1 }}>
+            <div style={{ fontFamily: 'var(--font-display)', fontStyle: 'italic', fontSize: 40, letterSpacing: '.12em', color: '#FFF1E6', lineHeight: 1.1 }}>
               {created.code}
             </div>
           </div>
@@ -231,7 +231,7 @@ export default function SessionScreen({ onReady }: Props) {
             onChange={(e) => setCode(e.target.value.toUpperCase())}
             placeholder="EX: 4F2K9A"
             maxLength={8}
-            style={{ ...inputStyle, letterSpacing: '.18em', textAlign: 'center', fontSize: 22, fontFamily: "'Instrument Serif',serif" }}
+            style={{ ...inputStyle, letterSpacing: '.18em', textAlign: 'center', fontSize: 22, fontFamily: 'var(--font-display)' }}
             autoFocus
           />
           <div onClick={busy ? undefined : handleJoin} className="btn-press" style={{ ...primaryBtn, opacity: busy ? 0.6 : 1 }}>

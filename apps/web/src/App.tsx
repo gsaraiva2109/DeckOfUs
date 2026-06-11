@@ -10,13 +10,14 @@ import TransitionScreen from './screens/TransitionScreen'
 import GateScreen from './screens/GateScreen'
 import OusadoScreen from './screens/OusadoScreen'
 import FinalScreen from './screens/FinalScreen'
+import FontSwitcher from './components/FontSwitcher'
 import type { DeckConfig, CardConfig } from './types'
 
 // Mock config — safe to commit. Real names/questions live in public/deck-config.json (gitignored).
 const DEFAULT_CFG: DeckConfig = {
   pessoa: 'Pessoa A',
   voce: 'Pessoa B',
-  intro: { kicker: 'um jogo para dois', titulo: 'DeckOfUs', subtitulo: 'Sem pressa, sem placar — só vocês dois.', botao: 'Começar' },
+  intro: { kicker: 'um jogo para dois', titulo: 'DeckOfUs', subtitulo: 'Sem pressa, sem placar, só vocês dois.', botao: 'Começar' },
   niveis: [
     { id:1, nome:'Aquecimento', transicao:{ titulo:'Aquecimento', frase:'Sem pressa. Comecem por aqui.' }, cartas:[
       { tipo:'pros_dois', texto:'Qual foi o melhor momento do seu dia hoje?' },
@@ -69,6 +70,9 @@ export default function App() {
   const [finalPhase, setFinalPhase] = useState(2)
   const [ousadoOn, setOusadoOn] = useState(false)
   const ousadoFiredRef = useRef(false)
+  // True for one render-cycle while applying a snapshot relayed from the other
+  // device, so the broadcast effect below doesn't echo it straight back.
+  const applyingRemoteRef = useRef(false)
 
   const audio = useAudio(muted)
 
@@ -97,6 +101,51 @@ export default function App() {
 
   useEffect(() => {
     const off = session.onOusadoEvent(() => runOusadoChoreography())
+    return off
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session])
+
+  // --- Phase sync (either device drives) -------------------------------------
+  // Snapshot of the navigation state, kept fresh each render so the relay
+  // handler can compare against it without re-subscribing.
+  const navRef = useRef({ screen, levelIdx, cardIdx, flipped, transTo, finalPhase })
+  navRef.current = { screen, levelIdx, cardIdx, flipped, transTo, finalPhase }
+
+  // Broadcast every local navigation change to the other device. Skips the
+  // single render caused by applying a remote snapshot (echo guard), and the
+  // ousado-driven screens — both devices reach those from `ousado_activated`.
+  useEffect(() => {
+    if (applyingRemoteRef.current) {
+      applyingRemoteRef.current = false
+      return
+    }
+    if (screen === 'ousado' || (screen === 'transition' && transTo === 3)) return
+    session.syncNav({ screen, levelIdx, cardIdx, flipped, transTo, finalPhase })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [screen, levelIdx, cardIdx, flipped, transTo, finalPhase])
+
+  // Apply a navigation snapshot relayed from the other device.
+  useEffect(() => {
+    const off = session.onNavEvent((snap) => {
+      const cur = navRef.current
+      if (
+        cur.screen === snap.screen &&
+        cur.levelIdx === snap.levelIdx &&
+        cur.cardIdx === snap.cardIdx &&
+        cur.flipped === snap.flipped &&
+        cur.transTo === snap.transTo &&
+        cur.finalPhase === snap.finalPhase
+      ) {
+        return
+      }
+      applyingRemoteRef.current = true
+      setScreen(snap.screen as Screen)
+      setLevelIdx(snap.levelIdx)
+      setCardIdx(snap.cardIdx)
+      setFlipped(snap.flipped)
+      setTransTo(snap.transTo)
+      setFinalPhase(snap.finalPhase)
+    })
     return off
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session])
@@ -278,6 +327,8 @@ export default function App() {
           )}
         </AnimatePresence>
       </div>
+
+      {import.meta.env.DEV && <FontSwitcher />}
     </div>
   )
 }

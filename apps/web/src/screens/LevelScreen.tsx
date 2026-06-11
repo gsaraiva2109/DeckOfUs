@@ -24,8 +24,8 @@ export default function LevelScreen({ cfg, pal, level, card, cardKey, flipped, m
       {/* top bar */}
       <div style={{ padding:'26px 26px 6px', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
         <div style={{ display:'flex', alignItems:'center', gap:9 }}>
-          <span style={{ width:9, height:9, borderRadius:'50%', background:pal.accent, boxShadow:`0 0 12px ${pal.accent}`, flexShrink:0 }}></span>
-          <span style={{ fontFamily:"'Instrument Serif',serif", fontStyle:'italic', fontSize:24, color:pal.levelText }}>{level.nome}</span>
+          <span style={{ width:9, height:9, borderRadius:'50%', background:pal.accent, boxShadow:`0 0 12px ${pal.accent}`, flexShrink:0, animation:'dou-pulse 1.8s ease-in-out infinite' }}></span>
+          <span style={{ fontFamily:'var(--font-level-label)', fontStyle:'var(--level-label-style)', fontSize:24, color:pal.levelText }}>{level.nome}</span>
         </div>
         <div
           onClick={onToggleMute}

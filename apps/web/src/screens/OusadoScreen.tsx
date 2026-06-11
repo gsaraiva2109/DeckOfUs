@@ -33,7 +33,7 @@ export default function OusadoScreen({ cfg }: Props) {
       <div style={{ position:'relative', fontWeight:600, fontSize:11, letterSpacing:'.3em', textTransform:'uppercase', color:'#FF7E9D', marginTop:28, animation:'dou-rise .7s ease .2s forwards' }}>
         {ous.kicker}
       </div>
-      <div style={{ position:'relative', fontFamily:"'Instrument Serif',serif", fontStyle:'italic', fontSize:42, lineHeight:1.0, color:'#fff', margin:'8px 0 0', animation:'dou-pop .8s ease .3s forwards' }}>
+      <div style={{ position:'relative', fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:42, lineHeight:1.0, color:'#fff', margin:'8px 0 0', animation:'dou-pop .8s ease .3s forwards' }}>
         {ous.titulo}
       </div>
       <p style={{ position:'relative', fontSize:14, lineHeight:1.55, color:'#E7A9B8', margin:'18px 0 0', maxWidth:300, animation:'dou-rise .7s ease .4s forwards' }}>

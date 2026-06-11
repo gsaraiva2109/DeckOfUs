@@ -38,3 +38,11 @@ model Photo {
   createdAt   DateTime @default(now())
   session     Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
 }
+
+// Generic key/value store. Used to persist Cloudreve's rotated refresh_token
+// across refreshes/restarts (Cloudreve v4 invalidates the previous one).
+model AppSetting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+}

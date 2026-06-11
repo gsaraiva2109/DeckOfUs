@@ -1,3 +1,18 @@
+/* Font tokens — single source of truth. The dev FontSwitcher overrides these
+   two custom properties live; every screen references the vars, never literals.
+   Default pairing: Fraunces (display) + Inter (body). */
+:root {
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  /* Level-name testers (independent, overridden live by FontSwitcher).
+     splash = CardStack level-intro splash; label = LevelScreen card label. */
+  --font-level-splash: 'Fraunces', serif;
+  --level-splash-style: normal;
+  --font-level-label: 'Bodoni Moda', serif;
+  --level-label-style: italic;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
@@ -10,12 +25,18 @@ html, body, #root {
   height: 100%;
   overflow: hidden;
   background: #1A0410;
-  font-family: 'Onest', system-ui, sans-serif;
+  font-family: var(--font-body);
 }
 
 @keyframes dou-floaty {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-12px); }
+}
+
+/* level dot: heartbeat scale + glow pulse */
+@keyframes dou-pulse {
+  0%, 100% { transform: scale(1); opacity: .8; }
+  50% { transform: scale(1.45); opacity: 1; }
 }
 
 @keyframes dou-drift {

@@ -102,9 +102,9 @@ export default function CardStack({ card, pal, levelName, flipped, P, V, onFlip,
   return (
     <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center' }}>
       <motion.div
-        initial={{ opacity: 0, y: 18, scale: 0.96 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.35, ease: [0.22, 0.9, 0.24, 1] as number[] }}
+        initial={{ opacity: 0, y: 54, scale: 0.86, rotate: -5 }}
+        animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
+        transition={{ type: 'spring', stiffness: 320, damping: 26, mass: 0.9 }}
         style={{ position:'relative', width:'min(80vw,318px)', height:'min(60dvh,452px)', touchAction:'none', userSelect:'none' }}
         onPointerDown={onDown}
         onPointerMove={onMove}
@@ -142,8 +142,8 @@ export default function CardStack({ card, pal, levelName, flipped, P, V, onFlip,
             }}>
               {/* FRONT */}
               <div style={{ ...faceBase, background: pal.grad, alignItems:'center', justifyContent:'center', padding:24, textAlign:'center' }}>
-                <div style={{ width:64, height:64, borderRadius:'50%', border:'1.5px solid rgba(255,255,255,.55)', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:"'Instrument Serif',serif", fontStyle:'italic', fontSize:28, color:'#fff' }}>✷</div>
-                <div style={{ fontFamily:"'Instrument Serif',serif", fontStyle:'italic', fontSize:30, color:'#fff', marginTop:18 }}>{levelName}</div>
+                <div style={{ width:64, height:64, borderRadius:'50%', border:'1.5px solid rgba(255,255,255,.55)', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-display)', fontStyle:'normal', fontSize:28, lineHeight:1, color:'#fff' }}>✷</div>
+                <div style={{ fontFamily:'var(--font-level-splash)', fontStyle:'var(--level-splash-style)', fontSize:30, color:'#fff', marginTop:18 }}>{levelName}</div>
                 <div style={{ fontSize:11, letterSpacing:'.18em', textTransform:'uppercase', color:'rgba(255,255,255,.85)', marginTop:12, animation:'dou-hint 2s ease-in-out infinite' }}>toque para virar</div>
               </div>
 
@@ -156,19 +156,19 @@ export default function CardStack({ card, pal, levelName, flipped, P, V, onFlip,
 
                 <div style={{ flex:1, display:'flex', flexDirection:'column', justifyContent:'center' }}>
                   {tipo === 'pros_dois' && (
-                    <div style={{ fontFamily:"'Instrument Serif',serif", fontStyle:'italic', fontSize:29, lineHeight:1.16, color:'#3B1020' }}>{card.texto}</div>
+                    <div style={{ fontFamily:"'Cormorant Garamond', serif", fontStyle:'normal', fontSize:29, lineHeight:1.16, color:'#3B1020' }}>{card.texto}</div>
                   )}
                   {tipo === 'trocada' && (
                     <div>
                       <div style={{ fontWeight:600, fontSize:13, color:pal.accent, marginBottom:8 }}>{trocadaLabel}</div>
-                      <div style={{ fontFamily:"'Instrument Serif',serif", fontStyle:'italic', fontSize:27, lineHeight:1.16, color:'#3B1020' }}>{card.texto}</div>
+                      <div style={{ fontFamily:"'Cormorant Garamond', serif", fontStyle:'normal', fontSize:27, lineHeight:1.16, color:'#3B1020' }}>{card.texto}</div>
                     </div>
                   )}
                   {tipo === 'voce_prefere' && (
                     <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
-                      <div style={{ background:'linear-gradient(150deg,#FFE7C2,#FF9E5E)', borderRadius:16, padding:16, textAlign:'center', fontFamily:"'Instrument Serif',serif", fontStyle:'italic', fontSize:21, color:'#5A2A10', lineHeight:1.15 }}>{card.a}</div>
+                      <div style={{ background:'linear-gradient(150deg,#FFE7C2,#FF9E5E)', borderRadius:16, padding:16, textAlign:'center', fontFamily:"'Cormorant Garamond', serif", fontStyle:'normal', fontSize:21, color:'#5A2A10', lineHeight:1.15 }}>{card.a}</div>
                       <div style={{ textAlign:'center', fontWeight:800, fontSize:13, color:'#B0552F', margin:'-4px 0' }}>ou</div>
-                      <div style={{ background:'linear-gradient(150deg,#FF93A8,#E84393)', borderRadius:16, padding:16, textAlign:'center', fontFamily:"'Instrument Serif',serif", fontStyle:'italic', fontSize:21, color:'#fff', lineHeight:1.15 }}>{card.b}</div>
+                      <div style={{ background:'linear-gradient(150deg,#FF93A8,#E84393)', borderRadius:16, padding:16, textAlign:'center', fontFamily:"'Cormorant Garamond', serif", fontStyle:'normal', fontSize:21, color:'#fff', lineHeight:1.15 }}>{card.b}</div>
                     </div>
                   )}
                   {tipo === 'mini_desafio' && (
@@ -176,7 +176,7 @@ export default function CardStack({ card, pal, levelName, flipped, P, V, onFlip,
                       <div style={{ display:'flex', justifyContent:'center', marginBottom:10 }}>
                         <Timer size={30} color={pal.accent} />
                       </div>
-                      <div style={{ fontFamily:"'Instrument Serif',serif", fontStyle:'italic', fontSize:26, lineHeight:1.18, color:'#3B1020' }}>{card.texto}</div>
+                      <div style={{ fontFamily:"'Cormorant Garamond', serif", fontStyle:'normal', fontSize:26, lineHeight:1.18, color:'#3B1020' }}>{card.texto}</div>
                     </div>
                   )}
                 </div>

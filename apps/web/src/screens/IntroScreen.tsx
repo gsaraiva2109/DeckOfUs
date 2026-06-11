@@ -37,7 +37,7 @@ export default function IntroScreen({ cfg, onStart }: Props) {
           <div style={{ position:'absolute', inset:0, borderRadius:24, background:'linear-gradient(155deg,#9E1E5C,#33112A)', transform:'rotate(-13deg) translateY(8px)', boxShadow:'0 18px 34px -16px #000' }}></div>
           <div style={{ position:'absolute', inset:0, borderRadius:24, background:'linear-gradient(155deg,#FF93A8,#E84393)', transform:'rotate(-3deg) translateY(2px)', boxShadow:'0 18px 34px -16px rgba(0,0,0,.5)' }}></div>
           <div style={{ position:'absolute', inset:0, borderRadius:24, background:'linear-gradient(155deg,#FFD9A0,#FF7E6B)', transform:'rotate(7deg)', boxShadow:'0 22px 42px -14px rgba(0,0,0,.55)', display:'flex', alignItems:'center', justifyContent:'center' }}>
-            <span style={{ fontFamily:"'Instrument Serif',serif", fontStyle:'italic', fontSize:52, color:'#fff' }}>✷</span>
+            <span style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:52, color:'#fff' }}>✷</span>
           </div>
         </div>
       </div>
@@ -47,7 +47,7 @@ export default function IntroScreen({ cfg, onStart }: Props) {
         <div style={{ opacity:0, fontWeight:600, fontSize:11, letterSpacing:'.24em', textTransform:'uppercase', color:'#FFB7C8', animation:'dou-rise .7s ease forwards' }}>
           {kicker}
         </div>
-        <h1 style={{ opacity:0, fontFamily:"'Plus Jakarta Sans',sans-serif", fontWeight:800, fontSize:46, lineHeight:.98, margin:'10px 0 0', color:'#FFF1E6', letterSpacing:'-.025em', animation:'dou-rise .7s ease .1s forwards' }}>
+        <h1 style={{ opacity:0, fontFamily:'var(--font-body)', fontWeight:800, fontSize:46, lineHeight:.98, margin:'10px 0 0', color:'#FFF1E6', letterSpacing:'-.025em', animation:'dou-rise .7s ease .1s forwards' }}>
           {titulo}
         </h1>
         <p style={{ opacity:0, fontSize:15, lineHeight:1.55, color:'#FFC9D6', margin:'14px 0 26px', animation:'dou-rise .7s ease .2s forwards' }}>

@@ -106,11 +106,11 @@ export default function GateScreen({ onEnd, onActivateOusadoLocal }: Props) {
       <div style={{ fontWeight:600, fontSize:11, letterSpacing:'.24em', textTransform:'uppercase', color:'#7A1535', animation:'dou-rise .7s ease forwards' }}>
         Fim do Nível 2
       </div>
-      <div style={{ fontFamily:"'Instrument Serif',serif", fontStyle:'italic', fontSize:40, lineHeight:1.05, color:'#fff', margin:'12px 0 0', animation:'dou-rise .7s ease .1s forwards' }}>
+      <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:40, lineHeight:1.05, color:'#fff', margin:'12px 0 0', animation:'dou-rise .7s ease .1s forwards' }}>
         Até aqui já foi<br/>bem fundo.
       </div>
       <p style={{ fontSize:15, lineHeight:1.55, color:'#FFE0EA', margin:'16px 0 30px', maxWidth:300, animation:'dou-rise .7s ease .2s forwards' }}>
-        Vocês podem fechar por aqui com leveza — ou seguir só mais um pouquinho.
+        Vocês podem fechar por aqui com leveza ou seguir só mais um pouquinho.
       </p>
       <div
         onClick={onEnd}
@@ -166,7 +166,7 @@ export default function GateScreen({ onEnd, onActivateOusadoLocal }: Props) {
             <div style={{ display:'inline-flex', color:'#FF335F', marginBottom:10 }}>
               <Heart size={26} fill="#FF335F" color="#FF335F" />
             </div>
-            <div style={{ fontFamily:"'Instrument Serif',serif", fontStyle:'italic', fontSize:24, color:'#FFF1E6', lineHeight:1.1 }}>
+            <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:24, color:'#FFF1E6', lineHeight:1.1 }}>
               senha do organizador
             </div>
             <p style={{ fontSize:12.5, color:'#E7A9B8', margin:'8px 0 16px', lineHeight:1.5 }}>
@@ -182,7 +182,7 @@ export default function GateScreen({ onEnd, onActivateOusadoLocal }: Props) {
               style={{
                 width:'100%', background:'rgba(0,0,0,.25)', border:'1px solid rgba(255,255,255,.22)',
                 borderRadius:12, color:'#FFF1E6', fontSize:16, padding:'13px 15px', outline:'none',
-                fontFamily:"'Plus Jakarta Sans',sans-serif",
+                fontFamily:'var(--font-body)',
               }}
             />
             {msg && (

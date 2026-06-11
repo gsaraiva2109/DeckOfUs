@@ -31,6 +31,14 @@ export function gateway(io: Server): void {
     void socket.join(sessionId);
     emitPresence(io, sessionId);
 
+    // Navigation relay: a device emits an opaque nav snapshot; mirror it to the
+    // OTHER device(s) in the room (sender excluded via socket.to). This keeps
+    // game start + card progression in lock-step. Either device may drive.
+    socket.on('nav', (payload: unknown) => {
+      if (!payload || typeof payload !== 'object' || Array.isArray(payload)) return;
+      socket.to(sessionId).emit('nav', payload);
+    });
+
     socket.on('disconnect', () => {
       // Presence recomputed after this socket has left the room.
       emitPresence(io, sessionId);
