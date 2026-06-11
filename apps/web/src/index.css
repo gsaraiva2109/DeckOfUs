@@ -1,0 +1,107 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #1A0410;
+  font-family: 'Onest', system-ui, sans-serif;
+}
+
+@keyframes dou-floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes dou-drift {
+  0% { transform: translateY(20px) scale(.6); opacity: 0; }
+  20% { opacity: .9; }
+  100% { transform: translateY(-120px) scale(1); opacity: 0; }
+}
+
+@keyframes dou-heartbeat {
+  0%, 28%, 100% { transform: scale(1); }
+  10% { transform: scale(1.18); }
+  19% { transform: scale(1.02); }
+}
+
+@keyframes dou-glow {
+  0%, 100% { opacity: .4; }
+  50% { opacity: .92; }
+}
+
+@keyframes dou-ring {
+  0% { transform: scale(.3); opacity: .75; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+@keyframes dou-rise {
+  0% { transform: translateY(16px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes dou-screen {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes dou-pop {
+  0% { transform: scale(.7); opacity: 0; }
+  60% { transform: scale(1.06); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes dou-curtain {
+  0% { transform: translateY(0%); }
+  100% { transform: translateY(-110%); }
+}
+
+@keyframes dou-bignum {
+  0% { transform: scale(1.3); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes dou-hint {
+  0%, 100% { transform: translateX(0); opacity: .5; }
+  50% { transform: translateX(7px); opacity: 1; }
+}
+
+@keyframes dou-confetti {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-200px) rotate(720deg); opacity: 0; }
+}
+
+@keyframes dou-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes dou-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-9px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(4px); }
+}
+
+/* button press feedback */
+.btn-press {
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.btn-press:active {
+  transform: scale(0.96) !important;
+  box-shadow: none !important;
+}
+
+/* prevent animation fill-mode flash on repeated screens */
+[style*="dou-rise"] {
+  animation-fill-mode: forwards;
+}
+[style*="dou-pop"] {
+  animation-fill-mode: forwards;
+  opacity: 0;
+}

@@ -1,0 +1,77 @@
+{
+  "$schema": "Config de conteúdo do DeckOfUs. Troque tudo aqui para um novo encontro — a interface não muda.",
+  "pessoa": "Pessoa A",
+  "voce": "Pessoa B",
+  "intro": {
+    "kicker": "um jogo para dois",
+    "titulo": "DeckOfUs",
+    "subtitulo": "Sem pressa, sem placar, só vocês dois.",
+    "botao": "Começar"
+  },
+  "niveis": [
+    {
+      "id": 1,
+      "nome": "Aquecimento",
+      "subtitulo": "Perguntas leves: infância, rotina, gostos.",
+      "tom": "fofo-brincalhao",
+      "transicao": { "titulo": "Aquecimento", "frase": "Sem pressa. Comecem por aqui." },
+      "cartas": [
+        { "tipo": "pros_dois", "texto": "Qual foi o melhor momento do seu dia hoje?" },
+        { "tipo": "pros_dois", "texto": "Que cheiro te leva direto de volta pra sua infância?" },
+        { "tipo": "voce_prefere", "a": "domingo na cama", "b": "domingo na rua" },
+        { "tipo": "mini_desafio", "texto": "Façam a mesma careta ao mesmo tempo." },
+        { "tipo": "pros_dois", "texto": "Qual música você ouviria pra sempre sem enjoar?" }
+      ]
+    },
+    {
+      "id": 2,
+      "nome": "Imersão",
+      "subtitulo": "Visão de mundo, objetivos, relacionamento.",
+      "tom": "caloroso-sincero",
+      "transicao": { "titulo": "Imersão", "frase": "A conversa começa a ficar mais profunda. Respira fundo." },
+      "cartas": [
+        { "tipo": "pros_dois", "texto": "O que você quer da vida nos próximos cinco anos?" },
+        { "tipo": "trocada", "de": "pessoa", "para": "voce", "texto": "Que sonho você ainda não contou pra ninguém?" },
+        { "tipo": "voce_prefere", "a": "viajar sem nenhum plano", "b": "ter cada detalhe combinado" },
+        { "tipo": "pros_dois", "texto": "O que faz você confiar em alguém?" },
+        { "tipo": "mini_desafio", "texto": "Descubram algo em comum em 30 segundos." }
+      ],
+      "_gatilho_secreto": {
+        "_comment": "Coração discreto no canto da última carta do Nível 2. Pressão longa + senha do organizador → modo ousado. Sincronização realtime = backend.",
+        "senha": "DEFINIR_NO_BACKEND"
+      }
+    },
+    {
+      "id": 3,
+      "nome": "Conexão",
+      "subtitulo": "Perguntas mais pessoais e íntimas.",
+      "tom": "espirituoso-charme",
+      "transicao": { "titulo": "Conexão", "frase": "Agora é só vocês dois. De verdade." },
+      "cartas": [
+        { "tipo": "pros_dois", "texto": "O que te faz se sentir realmente seguro com alguém?" },
+        { "tipo": "trocada", "de": "voce", "para": "pessoa", "texto": "O que te atraiu em mim primeiro?" },
+        { "tipo": "pros_dois", "texto": "Qual foi a última vez que você se sentiu verdadeiramente visto?" }
+      ]
+    }
+  ],
+  "modo_ousado": {
+    "_comment": "Conjunto MISTO: cartas ousadas diluídas com normais para a transição não ficar estranha. Ativação = animação sedutora + estado visual. Sync entre dispositivos = backend.",
+    "ativacao": { "titulo": "ativado", "kicker": "Modo ousado", "frase": "Algumas cartas mais ousadas entram no baralho, diluídas com as normais." },
+    "cartas": [
+      { "tipo": "pros_dois", "texto": "Qual foi a última vez que você fez algo espontâneo?" },
+      { "tipo": "pros_dois", "texto": "O que te deixa mais nervoso num encontro?" },
+      { "tipo": "trocada", "de": "pessoa", "para": "voce", "texto": "O que você está pensando agora e não falou ainda?" }
+    ]
+  },
+  "final": {
+    "titulo": "Vocês foram longe",
+    "frase": "Três níveis, dezenas de perguntas, e pelo menos uma careta ridícula. Nada mal pra um primeiro deck.",
+    "botao": "Jogar de novo"
+  },
+  "audio": {
+    "_comment": "Efeitos sutis em interações-chave. Sem música de fundo obrigatória.",
+    "virar_carta": true,
+    "mudar_nivel": true,
+    "modo_ousado": true
+  }
+}

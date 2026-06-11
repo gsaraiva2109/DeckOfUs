@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Session {
+  id            String        @id @default(uuid())
+  code          String        @unique
+  secretHash    String
+  status        String        @default("waiting")
+  ousadoActive  Boolean       @default(false)
+  failedTries   Int           @default(0)
+  lockedUntil   DateTime?
+  createdAt     DateTime      @default(now())
+  expiresAt     DateTime
+  participants  Participant[]
+  photos        Photo[]
+}
+
+model Participant {
+  id         String   @id @default(uuid())
+  sessionId  String
+  role       String
+  joinedAt   DateTime @default(now())
+  session    Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
+
+model Photo {
+  id          String   @id @default(uuid())
+  sessionId   String
+  publicUrl   String
+  cloudreveId String?
+  uploadedBy  String?
+  createdAt   DateTime @default(now())
+  session     Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}

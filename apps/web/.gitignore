@@ -1,0 +1,21 @@
+# real deck config — contains personal names/questions, never commit
+public/deck-config.json
+
+node_modules/
+dist/
+.env
+.env.local
+.env.*.local
+*.log
+npm-debug.log*
+.DS_Store
+.vscode/
+.idea/
+.claude/
+.agents/
+skills-lock.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

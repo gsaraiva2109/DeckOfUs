@@ -1,0 +1,29 @@
+# --- monorepo root ---
+# Per-app artifacts are ignored here too so a clean root scan stays quiet.
+
+# Dependencies & build output (any app)
+**/node_modules/
+**/dist/
+apps/api/data/
+
+# Real personal config — contains names/questions, never commit.
+apps/web/public/deck-config.json
+
+# Env files (keep the examples)
+**/.env
+**/.env.local
+**/.env.*.local
+
+# Logs & editor/tooling cruft
+*.log
+npm-debug.log*
+.DS_Store
+.vscode/
+.idea/
+.claude/
+.agents/
+.logs/
+skills-lock.json
+
+# Personal planning notes — keep local, never publish
+MISSING.md

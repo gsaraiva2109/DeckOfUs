@@ -1,0 +1,75 @@
+# =============================================================================
+# DeckOfUs — production compose stack (prebuilt images from GHCR)
+# -----------------------------------------------------------------------------
+# - All configuration is injected at runtime: env vars are `${VAR}` placeholders
+#   below, supplied by your deployment environment.
+# - The `backend` is INTERNAL-ONLY: no published ports. The frontend's nginx
+#   reaches it by the compose service name `backend:8080`.
+# - The `frontend` is the ONLY public service — route external traffic to it.
+# - The operator-provided `deck-config.json` is mounted into the frontend at
+#   runtime (see the commented example under `frontend.volumes`).
+# =============================================================================
+services:
+  # ---------------------------------------------------------------------------
+  # Backend — Fastify + Socket.IO + Prisma (SQLite). Listens on :8080.
+  # Internal-only: no published ports.
+  # ---------------------------------------------------------------------------
+  backend:
+    image: ghcr.io/gsaraiva2109/deckofus-backend:latest
+    restart: unless-stopped
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      PORT: ${PORT}
+      HOST: ${HOST}
+      CORS_ORIGINS: ${CORS_ORIGINS}
+      JWT_SECRET: ${JWT_SECRET}
+      TOKEN_TTL: ${TOKEN_TTL}
+      SESSION_TTL_HOURS: ${SESSION_TTL_HOURS}
+      OUSADO_MAX_TRIES: ${OUSADO_MAX_TRIES}
+      OUSADO_LOCK_MINUTES: ${OUSADO_LOCK_MINUTES}
+      PUBLIC_APP_URL: ${PUBLIC_APP_URL}
+      DATABASE_URL: ${DATABASE_URL}
+      STORAGE_DRIVER: ${STORAGE_DRIVER}
+      LOCAL_STORAGE_DIR: ${LOCAL_STORAGE_DIR}
+      LOCAL_PUBLIC_BASE: ${LOCAL_PUBLIC_BASE}
+      CLOUDREVE_BASE_URL: ${CLOUDREVE_BASE_URL}
+      CLOUDREVE_CLIENT_ID: ${CLOUDREVE_CLIENT_ID}
+      CLOUDREVE_CLIENT_SECRET: ${CLOUDREVE_CLIENT_SECRET}
+      CLOUDREVE_REFRESH_TOKEN: ${CLOUDREVE_REFRESH_TOKEN}
+      CLOUDREVE_FOLDER: ${CLOUDREVE_FOLDER}
+      TRUST_PROXY: ${TRUST_PROXY}
+    volumes:
+      # Named volume so the SQLite DB + uploaded photos survive redeploys.
+      - deckofus_data:/app/data
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8080/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+
+  # ---------------------------------------------------------------------------
+  # Frontend — static Vite/React SPA on nginx :80. The only public service.
+  # Reverse-proxies /api and /socket.io to the internal `backend` service.
+  # ---------------------------------------------------------------------------
+  frontend:
+    image: ghcr.io/gsaraiva2109/deckofus-frontend:latest
+    restart: unless-stopped
+    depends_on:
+      - backend
+    # Mount the operator-provided config (see DEPLOY.md). Without it the app
+    # falls back to a built-in placeholder config.
+    # volumes:
+    #   - ./deck-config.json:/usr/share/nginx/html/deck-config.json:ro
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1/healthz"]
+      interval: 30s
+      timeout: 5s
+      start_period: 5s
+      retries: 3
+
+# Named volume holding the SQLite DB (deckofus.db) + uploaded photos (uploads/).
+# Required for persistence: without it, /app/data is ephemeral and the database
+# is wiped on every redeploy.
+volumes:
+  deckofus_data:
